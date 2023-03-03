@@ -1,10 +1,14 @@
 # Solidity Tutorial
 
-## Contents
-- Introduction
+# Contents
+
+## Part 1
+
+- **Introduction**
     - What is Solidity
     - Getting started
-- Data types
+
+- **Data types**
     - Simple
         - bool
         - int
@@ -20,7 +24,7 @@
         - bytes, string
         - mapping
 
-- Variables
+- **Variables**
     - Declaration
     - Scoping
     - Visibility
@@ -29,21 +33,22 @@
     - Data location
     - Globally available variables
 
-- Control structures
+- **Control structures**
     - if/else
     - switch
     - loops
 
-- Functions
+- **Functions**
     - Declaration
     - Paramteres and return types, named params, omitted params
     - Visibility
     - Internal/External call type
     - Data access
     - Modifiers
-    - ABI
 
-- Contracts
+## Part 2
+
+- **Contracts**
     - Creation
     - Relation to addresses
     - Special functions
@@ -55,22 +60,27 @@
     - Abstract contracts
     - Interfaces
 
-- Events
+- **ABI**
+
+- **Events**
     - Creation
     - Emit
 
-- Error handling
+- **Error handling**
     - Errors
     - built-in functions
     - try/catch
 
-- Libraries
+- **Libraries**
     - Difference between contracts
     - using for
+
+## Bonus
 
 - To be continued
     - Deployment
     - Working with different chains
+    - Styling tips
     - Testing
         - Mocking
     - Advanced features
