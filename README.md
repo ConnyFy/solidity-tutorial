@@ -67,3 +67,40 @@
 - Libraries
     - Difference between contracts
     - using for
+
+- To be continued
+    - Deployment
+    - Working with different chains
+    - Testing
+        - Mocking
+    - Advanced features
+        - Storage and Memory
+            - Understanding Storage and Memory
+            - Using Storage and Memory Effectively
+        - Gas and Transactions
+            - Gas and its Role in Ethereum
+            - Transaction Structure and Optimization
+            - Gas Optimization Techniques
+        - Unchecked arithmetics
+        - Inline assembly
+    - Scaling
+        - Layer 2 scaling solutions
+            - Side channels
+            - Plasma
+            - Rollups
+            - Eth 2.0
+    - Token Standards
+        - ERC-20 Tokens
+        - ERC-721 Tokens
+    - DApps
+        - Introduction
+        - Lending and Borrowing
+        - Decentralized Exchanges (DEXs)
+        - Interacting with DApps
+    - Creating a Dapp
+    - Non-Fungible Tokens (NFTs)
+        - Applications of NFTs in Gaming, Art, and Collectibles
+        - Creating and Trading NFTs on Ethereum
+    - Governance and DAOs
+        - Decentralized Autonomous Organizations (DAOs)
+        - Implementing Governance Mechanisms
