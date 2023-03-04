@@ -27,13 +27,6 @@ contract SolidityTypes {
         bool equal2 = variable == variable_false; // true
         bool not_equal = variable_false != variable_true; // true
 
-        console.log("negate", negate);
-        console.log("logical_and", logical_and);
-        console.log("logical_or", logical_or);
-        console.log("equal", equal);
-        console.log("equal2", equal2);
-        console.log("not_equal", not_equal);
-
         console.log("Short circuit - AND");
         bool and_circuit1 = bool_f() && bool_t();
         console.log("---");
