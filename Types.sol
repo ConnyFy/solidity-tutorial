@@ -61,37 +61,50 @@ contract SolidityTypes {
         int int_var; // == int256 int_var;
         uint uint_var; // == uint256 uint_var;
 
+        //Right-padded
+        uint8 a = 1;
+        uint16 b = 256;
+
+        //uint8 c = b;
+        uint16 d = a;
+
         // Comparison
-        uint8 a = 7;
-        uint8 b = 42;
+        uint8 x = 7;
+        uint8 y = 42;
         
-        bool comparison = a < b;
+        bool comparison = x < y; // true
         // <, <=, ==, !=, >=, >
+        
+        uint16 yy = 42;
+        bool comparison2 = y == yy; // true
+
+        // int16 xx = 42;
+        // bool comparison3 = x == xx;
 
         // Arithmetic
-        // a+b, a-b, a*b, a/b, a%b, -a, a**2
-        // a/0, a%0 == error
+        // x+y, x-y, x*y, x/y, x%y, -x, x**2
+        // x/0, x%0 == error
         // Division rounds towards zero
         // 0**0 == 1
 
         // Bit operators
         /*
-        a=42 ->    00101010
-        b=6 ->     00000110
+        x=42 ->    00101010
+        y=6 ->     00000110
         -------------------
-        a&b ->     00000010 (=2)
-        a|b ->     00101110 (=46)
-        a^b ->     00101100 (=44)
-        ~a ->      11010101 (=213)
+        x&y ->     00000010 (=2)
+        x|y ->     00101110 (=46)
+        x^y ->     00101100 (=44)
+        ~x ->      11010101 (=213)
         */
 
         // Shift operators
         /*
-        a=42 ->    00101010 (=42)
-        a<<1 ->    01010100 (=84)
-        a<<2 ->    10101000 (=168)
-        a>>1 ->    00010101 (=21)
-        a>>2 ->    00001010 (=10)
+        x=42 ->    00101010 (=42)
+        x<<1 ->    01010100 (=84)
+        x<<2 ->    10101000 (=168)
+        x>>1 ->    00010101 (=21)
+        x>>2 ->    00001010 (=10)
         */
 
         //TODO: quick demo how signed integers behave
