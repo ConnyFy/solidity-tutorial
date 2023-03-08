@@ -16,13 +16,6 @@ contract TestContractReceive {
 contract SolidityTypes {
     constructor() payable {}
     // # Simple
-    bool bool_variable;
-    int128 signed_int_variable;
-    uint128 unsigned_int_variable;
-    fixed128x18 signed_fixed_variable;
-    ufixed128x18 unsigned_fixed_variable;
-    bytes32 bytes_static_variable;
-    address address_variable;
 
     // ## Demo bool
     function demo_bool() public view {
@@ -58,7 +51,7 @@ contract SolidityTypes {
         return true;
     }
 
-    // ## integers
+    // ## Demo Integers
     function integer_demo() public view {
         int8 int8_var; // 8 bits = 1 byte
         int16 int16_var; // 2 bytes
@@ -123,7 +116,7 @@ contract SolidityTypes {
 
     }
 
-    // ## fixed number
+    // ## Demo Fixed number
     function fixed_demo() public view {
         // Not implemented yet
 
@@ -149,7 +142,7 @@ contract SolidityTypes {
 
     }
 
-    // # Static sized byte arrays
+    // # Demo Static sized byte arrays
     function static_bytes_demo() public view {
         bytes4 bytes_string = "xyzw";
         bytes4 bytes_hex = hex"78797A77"; //xyzw
@@ -195,6 +188,7 @@ contract SolidityTypes {
         // bytes_short_copy[0] = "A";
     }
 
+    // Demo Address, contract
     function address_demo() public {
         address address_var = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF; // 20 bytes, checksum
         address payable address_payable_var = payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF);
@@ -267,20 +261,26 @@ contract SolidityTypes {
         return string(abi.encodePacked("0x", converted));
     }
 
-    
-    
     // # Compound
-    enum EnumType { Enum1, Enum2, Enum3 }
-    EnumType enum_variable;
-
     struct StructType {
         address addr;
         uint128 number;
     }
     StructType struct_variable;
 
-    //type UFixed256x18 is uint256;
-    //UFixed256x18 user_defined_type_variable;
+    type UFixed256x18 is uint256;
+    UFixed256x18 user_defined_type_variable;
+
+    // Demo Enum
+    enum Status { DRAFT, SENT, DELIVERED }
+
+    function enum_demo() public pure {
+        Status enum_var; // DRAFT
+        Status enum_var2 = Status.SENT; // SENT
+        Status enum_var3 = Status(2); // DELIVERED
+        // Status enum_var4 = Status(-1);
+        // Status enum_var5 = Status(3);
+    }
 
     // # Dynamic
     int[5] int_array_variable;
