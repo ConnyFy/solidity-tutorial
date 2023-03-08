@@ -56,6 +56,7 @@
         - receive
         - fallback
     - Interacting with other contracts
+      - call, delegatecall, staticcall
     - Inheritance
     - Abstract contracts
     - Interfaces
@@ -91,6 +92,7 @@
             - Gas and its Role in Ethereum
             - Transaction Structure and Optimization
             - Gas Optimization Techniques
+        - Creation vs bytecode
         - Unchecked arithmetics
         - Inline assembly
     - Scaling

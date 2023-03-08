@@ -3,15 +3,26 @@ pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
+contract TestContract {
+    function test() public payable returns (uint8) {
+        return 1;
+    }
+}
+
+contract TestContractReceive {
+    receive() external payable {}
+}
+
 contract SolidityTypes {
+    constructor() payable {}
     // # Simple
     bool bool_variable;
     int128 signed_int_variable;
     uint128 unsigned_int_variable;
     fixed128x18 signed_fixed_variable;
     ufixed128x18 unsigned_fixed_variable;
+    bytes32 bytes_static_variable;
     address address_variable;
-    bytes32 bytes_fixed_variable;
 
     // ## Demo bool
     function demo_bool() public view {
@@ -63,7 +74,7 @@ contract SolidityTypes {
 
         //Right-padded
         uint8 a = 1;
-        uint16 b = 256;
+        uint16 b = 1;
 
         //uint8 c = b;
         uint16 d = a;
@@ -77,6 +88,7 @@ contract SolidityTypes {
         
         uint16 yy = 42;
         bool comparison2 = y == yy; // true
+        console.log(comparison2);
 
         // int16 xx = 42;
         // bool comparison3 = x == xx;
@@ -137,6 +149,7 @@ contract SolidityTypes {
 
     }
 
+    // # Static sized byte arrays
     function static_bytes_demo() public view {
         bytes4 bytes_string = "xyzw";
         bytes4 bytes_hex = hex"78797A77"; //xyzw
@@ -174,13 +187,87 @@ contract SolidityTypes {
         // Similar to an array
         bytes1 bytes_element = bytes_rightpad[0]; //a;
         // bytes1 bytes_element_inv = bytes_string_rightpad[4];
-        
+
         uint8 bytes_length = bytes_rightpad.length; //4;
 
         // bytes (without number suffix) is dynamically sized!
         // static sized byte arrays is copied by value and cannot be modified
         // bytes_short_copy[0] = "A";
     }
+
+    function address_demo() public {
+        address address_var = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF; // 20 bytes, checksum
+        address payable address_payable_var = payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF);
+        // address address_var_inv = 0x11113a6d3569DF655070DEd06cb7A1b2Ccd1D3AF;
+
+        // Since 0.6, you need explicit conversion
+        // bytes20 bytes_var = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF;
+        bytes20 bytes_var = bytes20(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF);
+
+        // uint160 int_var = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF;
+        uint160 int_var = uint160(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF);
+
+        // Operators
+        // ==, !=, (<, <=, >=, >)
+
+        // Members - ETH related
+        uint256 address_balance = address_var.balance;
+        uint256 address_payable_balance = address_payable_var.balance;
+
+        // address_var.transfer(10);
+        //address_payable_var.transfer(10);
+        // bool success = address_var.send(10);
+        //bool send_success = address_payable_var.send(10);
+        // transfer reverts, send returns False
+
+        TestContract testContract = new TestContract();
+        TestContractReceive testContractReceive = new TestContractReceive();
+
+        address tC_address = address(testContract);
+        address tCR_address = address(testContractReceive);
+
+        // address payable tC_address_payable = payable(testContract);
+        address payable tCR_address_payable = payable(testContractReceive);
+
+        address payable tC_address_payable2 = payable(tC_address);
+        address payable tCR_address_payable2 = payable(tCR_address);
+
+        // Members - low level call
+        // call, delegatecall, staticcall
+        //uint8 result1 = testContract.test{value: 0, gas: 100000}();
+        //console.log(result1);
+        //(bool call_success, bytes memory returnBytes) = tC_address.call{value: 0, gas: 100000}(abi.encodeWithSignature("test()"));
+        //uint8 result2 = abi.decode(returnBytes, (uint8));
+        //console.log(result2);
+
+        // send, transfer or call
+        // 2300 eth limit
+
+        // Members - code
+        bytes memory code = tC_address.code;
+        bytes32 codehash = tC_address.codehash;
+        console.log(code.length);
+        console.log(iToHex(code));
+        bytes memory creation_code = type(TestContract).creationCode;
+        console.log(creation_code.length);
+        console.log(iToHex(creation_code));
+    }
+    function iToHex(bytes memory buffer) public pure returns (string memory) {
+
+        // Fixed buffer size for hexadecimal convertion
+        bytes memory converted = new bytes(buffer.length * 2);
+
+        bytes memory _base = "0123456789abcdef";
+
+        for (uint256 i = 0; i < buffer.length; i++) {
+            converted[i * 2] = _base[uint8(buffer[i]) / _base.length];
+            converted[i * 2 + 1] = _base[uint8(buffer[i]) % _base.length];
+        }
+
+        return string(abi.encodePacked("0x", converted));
+    }
+
+    
     
     // # Compound
     enum EnumType { Enum1, Enum2, Enum3 }
@@ -192,8 +279,8 @@ contract SolidityTypes {
     }
     StructType struct_variable;
 
-    type UFixed256x18 is uint256;
-    UFixed256x18 user_defined_type_variable;
+    //type UFixed256x18 is uint256;
+    //UFixed256x18 user_defined_type_variable;
 
     // # Dynamic
     int[5] int_array_variable;
