@@ -15,7 +15,7 @@ contract TestContractReceive {
 
 contract SolidityTypes {
     constructor() payable {}
-    // # Simple
+    // # Value types
 
     // ## Demo bool
     function demo_bool() public view {
@@ -142,7 +142,7 @@ contract SolidityTypes {
 
     }
 
-    // # Demo Static sized byte arrays
+    // ## Demo Static sized byte arrays
     function static_bytes_demo() public view {
         bytes4 bytes_string = "xyzw";
         bytes4 bytes_hex = hex"78797A77"; //xyzw
@@ -188,7 +188,7 @@ contract SolidityTypes {
         // bytes_short_copy[0] = "A";
     }
 
-    // Demo Address, contract
+    // ## Demo Address, contract
     function address_demo() public {
         address address_var = 0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF; // 20 bytes, checksum
         address payable address_payable_var = payable(0xdCad3a6d3569DF655070DEd06cb7A1b2Ccd1D3AF);
@@ -261,8 +261,7 @@ contract SolidityTypes {
         return string(abi.encodePacked("0x", converted));
     }
 
-    // # Compound
-    // Demo Enum
+    // ## Demo Enum
     enum Status { DRAFT, SENT, DELIVERED }
 
     function enum_demo() public pure {
@@ -273,7 +272,7 @@ contract SolidityTypes {
         // Status enum_var5 = Status(3);
     }
 
-    // Demo User-defined types
+    // ## Demo User-defined types
     //type Price is uint256;
 
     function user_defined_demo() public {
@@ -299,7 +298,9 @@ contract SolidityTypes {
 
     using { addPrice } for Price;
 
-    // Struct demo
+    // # Reference types
+    
+    // ## Struct demo
     enum EyeColor { BROWN, BLUE, GREEN, HAZAL, OTHER }
     struct Person {
         uint16 height;
@@ -320,7 +321,6 @@ contract SolidityTypes {
         // No recursive struct
     }
 
-    // # Dynamic
     int[5] int_array_variable;
     int[] int_dynamic_array_variable;
     bytes bytes_dynamic_variable;
