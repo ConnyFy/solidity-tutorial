@@ -268,9 +268,6 @@ contract SolidityTypes {
     }
     StructType struct_variable;
 
-    type UFixed256x18 is uint256;
-    UFixed256x18 user_defined_type_variable;
-
     // Demo Enum
     enum Status { DRAFT, SENT, DELIVERED }
 
@@ -282,10 +279,41 @@ contract SolidityTypes {
         // Status enum_var5 = Status(3);
     }
 
+    // Demo User-defined types
+    //type Price is uint256;
+
+    function user_defined_demo() public {
+        Price price;
+        
+        // Price price_10 = 10;
+        Price price_10 = Price.wrap(10);
+
+        //price = price + 20;
+        uint256 price_unwrapped = Price.unwrap(price);
+        price_unwrapped = price_unwrapped+20;
+        Price increased_price = Price.wrap(price_unwrapped);
+
+        // pay_function(10);
+        pay_function(increased_price);
+
+        Price even_higher_price = increased_price.addPrice(price_10);
+        console.log(Price.unwrap(even_higher_price));
+    }
+    function pay_function(Price p) public {
+        console.log("You paid", Price.unwrap(p));
+    }
+
+    using { addPrice } for Price;
+
     // # Dynamic
     int[5] int_array_variable;
     int[] int_dynamic_array_variable;
     bytes bytes_dynamic_variable;
     string string_variable;
     mapping(address => uint128) mapping_variable;
+}
+
+type Price is uint256;
+function addPrice(Price self, Price other) pure returns (Price) {
+    return Price.wrap(Price.unwrap(self) + Price.unwrap(other));
 }
