@@ -9,19 +9,18 @@
     - Getting started
 
 - **Data types**
-    - Simple
-        - bool
-        - int
+    - Value types
+        - boolean
+        - integer
         - fixed
-        - address, contract
         - fixed bytes
-    - Compound
-        - enums
-        - structs
+        - address, contract
+        - enum
         - user defined
-    - Dynamic
-        - Arrays
+    - Reference types
+        - array
         - bytes, string
+        - struct
         - mapping
 
 - **Variables**

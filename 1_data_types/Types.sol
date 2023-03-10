@@ -65,7 +65,7 @@ contract SolidityTypes {
         int int_var; // == int256 int_var;
         uint uint_var; // == uint256 uint_var;
 
-        //Right-padded
+        //Left-padded
         uint8 a = 1;
         uint16 b = 1;
 
