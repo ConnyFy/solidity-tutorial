@@ -11,7 +11,7 @@ contract EnumDemo {
         Status enum_var; // DRAFT
         Status enum_var2 = Status.SENT; // SENT
         Status enum_var3 = Status(2); // DELIVERED
-        // Status enum_var4 = Status(-1);
-        // Status enum_var5 = Status(3);
+        // Status enum_var4 = Status(-1); // invalid
+        // Status enum_var5 = Status(3); // invalid
     }
 }

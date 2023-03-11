@@ -5,20 +5,20 @@ import "hardhat/console.sol";
 
 
 contract StaticBytesDemo {
-    function static_bytes_demo() public view {
+    function demo() public view {
         bytes4 bytes_string = "xyzw";
         bytes4 bytes_hex = hex"78797A77"; //xyzw
 
         // Comparison
         // <, <=, ==, !=, >=, >
-        console.log("1", bytes_string == bytes_hex); // true
+        bool eq1 = bytes_string == bytes_hex; // true
 
         bytes2 bytes_short = "ab";
         bytes4 bytes_rightpad = "ab\x00\x00";
         bytes4 bytes_leftpad = "\x00\x00ab";
-        
-        console.log("right", bytes_short == bytes_rightpad); //true
-        console.log("left", bytes_short == bytes_leftpad); //false
+
+        bool eq_right = bytes_short == bytes_rightpad; //true
+        bool eq_left = bytes_short == bytes_leftpad; //false
 
         // Bit operators
         // &, |, ^, ~
@@ -40,13 +40,16 @@ contract StaticBytesDemo {
         }
 
         // Similar to an array
-        bytes1 bytes_element = bytes_rightpad[0]; //a;
-        // bytes1 bytes_element_inv = bytes_string_rightpad[4];
-
         uint8 bytes_length = bytes_rightpad.length; //4;
 
-        // bytes (without number suffix) is dynamically sized!
-        // static sized byte arrays is copied by value and cannot be modified
-        // bytes_short_copy[0] = "A";
+        bytes1 bytes_element = bytes_rightpad[0]; //a;
+        // bytes1 bytes_element_inv = bytes_string_rightpad[4]; // This is invalid as bytes_string_rightpad has a length of 4
+
+        // NOTES:
+        // static sized byte arrays are copied by value but since you cant modify the elements
+        // it is similar to ref types.
+        // bytes_short_copy[0] = "A"; // It is invalid as the index operator gives a read-only value
+
+        // bytes (without number suffix) is totally different, it is dynamically sized!
     }
 }
