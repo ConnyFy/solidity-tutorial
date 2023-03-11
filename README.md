@@ -23,6 +23,8 @@
         - struct
         - mapping
 
+## Part 2
+
 - **Variables**
     - Declaration
     - Scoping
@@ -32,11 +34,6 @@
     - Data location
     - Globally available variables
 
-- **Control structures**
-    - if/else
-    - switch
-    - loops
-
 - **Functions**
     - Declaration
     - Paramteres and return types, named params, omitted params
@@ -45,7 +42,12 @@
     - Data access
     - Modifiers
 
-## Part 2
+- **Control structures**
+    - if/else
+    - switch
+    - loops
+
+## Part 3
 
 - **Contracts**
     - Creation
