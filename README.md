@@ -82,18 +82,24 @@
 - To be continued
     - Deployment
     - Working with different chains
-    - Styling tips
     - Testing
         - Mocking
+    - Styling tips
+        - Format guide
+            - Structure code
+            - Conventions
+        - Practical things
+            - Code optimization
     - Advanced features
         - Storage and Memory
             - Understanding Storage and Memory
-            - Using Storage and Memory Effectively
+            - Understanding Calldata
+            - Understanding Stack and Code
+            - Creation vs bytecode
         - Gas and Transactions
             - Gas and its Role in Ethereum
             - Transaction Structure and Optimization
             - Gas Optimization Techniques
-        - Creation vs bytecode
         - Unchecked arithmetics
         - Inline assembly
     - Scaling
