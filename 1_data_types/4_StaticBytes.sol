@@ -48,7 +48,7 @@ contract StaticBytesDemo {
         // NOTES:
         // static sized byte arrays are copied by value but since you cant modify the elements
         // it is similar to ref types.
-        // bytes_short_copy[0] = "A"; // It is invalid as the index operator gives a read-only value
+        // bytes_string_rightpad[0] = "A"; // It is invalid as the index operator gives a read-only value
 
         // bytes (without number suffix) is totally different, it is dynamically sized!
     }
