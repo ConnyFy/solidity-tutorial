@@ -23,6 +23,12 @@
         - struct
         - mapping
 
+- **Other Operators**
+    - Tenary
+    - +=
+    - i++, ++i
+    - delete
+
 ## Part 2
 
 - **Variables**
