@@ -38,12 +38,14 @@ contract MappingDemo {
         // Get a list of keys -> NOT POSSIBLE!
 
         // It can only be declared as a storage variable.
-        // It can only be part of a function header if the function is private/internal
+        // mapping(uint8 => uint8) memory mapping_memory; // invalid
+        // It is true for structs that contain mappings
     }
 
     // Nested mappings
     mapping (address => mapping (address => uint256)) private _allowances;
 
+    // It can only be part of a function header if the function is private/internal
     function fc_with_mapping(mapping(uint8 => uint256) storage mapping_param) internal pure {
 
     }

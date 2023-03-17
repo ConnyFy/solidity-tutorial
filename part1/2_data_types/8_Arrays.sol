@@ -75,7 +75,8 @@ contract ArrayDemo {
     function dynamic_fc() private pure returns (uint8, uint8) {
         return (1, 2);
     }
-
+    
+    // Demo of multidimension arrays
     
     function calldata_array_demo(uint8[] calldata param) public view {
         // As of now, array slices only works on calldata arrays. This is planned to change in the future.
