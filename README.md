@@ -24,7 +24,7 @@
         - mapping
 
 - **Other Operators**
-    - Tenary
+    - Ternary
     - +=
     - i++, ++i
     - delete
