@@ -6,6 +6,14 @@ import "hardhat/console.sol";
 
 contract DeclarationDemo {
 
+    uint number_storage1;
+    uint number_storage2 = 1;
+    //(uint number_storage3, uint number_storage4) = (33, 44);
+    //number_storage2 = 2;
+    /*{
+        uint number_storage3 = 1;
+    }*/
+
     function demo() public view {
         // Declaration
         // type name;
