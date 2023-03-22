@@ -8,14 +8,14 @@ contract DeclarationDemo {
 
     uint number_storage1;
     uint number_storage2 = 1;
-    //(uint number_storage3, uint number_storage4) = (33, 44);
-    //number_storage2 = 2;
+    //(uint number_storage3, uint number_storage4) = (33, 44); // In storage you cannot initialize multuple variables in one line
+    //number_storage2 = 2; // you cannot use assignment
     /*{
-        uint number_storage3 = 1;
+        uint number_storage3 = 1; // you cannot use block scopes
     }*/
 
     function demo() public view {
-        // Declaration
+        // Declaration, Initialization
         // type name;
         // type name = initial_value;
         uint number1; // default value
@@ -40,14 +40,14 @@ contract DeclarationDemo {
         //inner_scoped = 30; // Undeclared identifier
 
         {
-            uint inner_scoped = 40;
+            uint64 inner_scoped = 40;
         }
 
         {
-            int8 inner_scoped = 50;
+            bool inner_scoped = true;
         }
 
-        // To save stack-depth
+        // Trick to save stack-depth
         uint final_result1;
         uint final_result2;
         {
