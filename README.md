@@ -40,6 +40,8 @@
     - Data location
     - Globally available variables
 
+## Part 3
+
 - **Functions**
     - Declaration
     - Paramteres and return types, named params, omitted params
@@ -53,7 +55,7 @@
     - switch
     - loops
 
-## Part 3
+## Part 4
 
 - **Contracts**
     - Creation
@@ -68,7 +70,11 @@
     - Abstract contracts
     - Interfaces
 
+## Part 5
+
 - **ABI**
+
+## Part 6
 
 - **Events**
     - Creation
