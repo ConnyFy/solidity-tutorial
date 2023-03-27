@@ -37,10 +37,17 @@
     - Visibility
     - Mutability (const, immutable)
     - Units
-    - Data location
     - Globally available variables
 
 ## Part 3
+
+- **Data location**
+    - Introduction
+    - Storage
+    - Memory
+    - Calldata
+
+## Part 4
 
 - **Functions**
     - Declaration
@@ -55,7 +62,7 @@
     - switch
     - loops
 
-## Part 4
+## Part 5
 
 - **Contracts**
     - Creation
@@ -70,11 +77,11 @@
     - Abstract contracts
     - Interfaces
 
-## Part 5
+## Part 6
 
 - **ABI**
 
-## Part 6
+## Part 7
 
 - **Events**
     - Creation
