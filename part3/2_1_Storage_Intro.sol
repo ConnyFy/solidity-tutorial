@@ -7,11 +7,11 @@ import "hardhat/console.sol";
 - It is a quite unique mechanism, nothing you would see in any other programming languages.
 - As mentioned, the purpose of Storage is to store long-term data, that needs no be persisted between calls to the contract, between transactions, throughout the whole life of the contract. That is why storage is also reffered as State.
 - Each contract can maintain their own Storage and can access - meaning both reading and writing - only their own data by default. The only way contract A can read or write contract B storage is when contract B exposes functions that enable it to do so.
-- Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32byte values.
-- Of course that is not how it actually stored as that number is approximately the number of atoms in the observable universe. It is implemented by a slotnumber->value mapping that maps 32byte keys to 32byte values.
+- Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32byte values. Elements of storage is also referred as slots.
+- Of course that is not how it actually stored as that number is approximately the number of atoms in the observable universe. It is implemented by a slotindex->slotvalue mapping that maps 32byte keys to 32byte values.
 */
 
-contract StorageDemo1 {
+contract StorageIntroduction {
     uint256 zero;
     uint8 ten = 10;
     bool[2] answers = [false, true];
