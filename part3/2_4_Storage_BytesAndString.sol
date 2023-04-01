@@ -57,4 +57,22 @@ contract StorageBytesAndString {
             because the 33rd "a" is written to (dynSlot+1)
         */
     }
+    bytes bytesValue = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
+
+    function addToBytes() public {
+        (bytesValue.push(), bytesValue.push()) = (0x61, 0x61);
+        getStorageValue(1);
+
+        /*
+        28 "a"s
+            slot:       0x6161616161616161616161616161616161616161616161616161616100000038
+            dynSlot:    0
+        30 "a"s
+            slot:       0x616161616161616161616161616161616161616161616161616161616161003C
+            dynSlot:    0
+        32 "a"s
+            slot:       0x0000000000000000000000000000000000000000000000000000000000006141
+            dynSlot:    0x6161616161616161616161616161616161616161616161616161616161610061
+        */
+    }
 }
