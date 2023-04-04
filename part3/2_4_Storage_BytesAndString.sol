@@ -57,6 +57,9 @@ contract StorageBytesAndString {
             because the 33rd "a" is written to (dynSlot+1)
         */
     }
+
+    // Most of the times you won't notice the difference, however when you work with references of .push() it can cause a problem
+    
     bytes bytesValue = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
 
     function addToBytes() public {
