@@ -52,15 +52,16 @@ contract StorageBytesAndString {
             slot: 65(0x0000000000000000000000000000000000000000000000000000000000000041)
             dynSlot: 0x6161616161616161616161616161616161616161616161616161616161616161
         33 "a"s
-            slot: 65(0x0000000000000000000000000000000000000000000000000000000000000041)
+            slot: 67(0x0000000000000000000000000000000000000000000000000000000000000043)
             dynSlot: 0x6161616161616161616161616161616161616161616161616161616161616161
-            because the 33rd "a" is written to (dynSlot+1)
+            dynSlot did not change because the 33rd "a" is written to (dynSlot+1)
         */
     }
 
-    // Most of the times you won't notice the difference, however when you work with references of .push() it can cause a problem
+    // Most of the time you won't notice the difference between short-format and long-format.
+    // However, when you work with references of .push() it can cause problems.
     
-    bytes bytesValue = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
+    bytes bytesValue = "aaaaaaaaaaaaaaaaaaaaaaaaaa"; // 26 "a"s
 
     function addToBytes() public {
         (bytesValue.push(), bytesValue.push()) = (0x61, 0x61);
@@ -76,6 +77,23 @@ contract StorageBytesAndString {
         32 "a"s
             slot:       0x0000000000000000000000000000000000000000000000000000000000006141
             dynSlot:    0x6161616161616161616161616161616161616161616161616161616161610061
+            Note that, the second last byte was written to slot instead of dynSlot
+            - First .push() reference:
+                - At first, bytesValue has a length of 30.
+                - The method call will increase its length to 31.
+                - The length is still less than 32 so it will stay in short format.
+                - It will give a reference to the new element that is the 31st byte in slot.
+                - Remember, the 32nd is reserved for storing the length.
+            - Second .push() reference:
+                - The length of bytesValue is 31.
+                - The method call will increase its length to 32.
+                - The length reached 32, so it will transform it to long-format, moving all the elements to dynSlot, keeping only the 32nd byte in slot.
+                - Give a reference to the new element that is the 32nd byte in dynSlot.
+                - Note that, the transformation from short-format to long-format happened before the assignments, so the at the time of the transformation the 31st byte of slot is still empty.
+            - Assignments:
+                - The first reference still points to the 31st byte of slot, the second reference to the 32nd byte of dynSlot.
+                - It breaks the variable, as in long-format slot supposed to only store the length of the array (more precisely the double of it plus one)
+                - 0x6141 -> 24897 -> 12448 length
         */
     }
 }

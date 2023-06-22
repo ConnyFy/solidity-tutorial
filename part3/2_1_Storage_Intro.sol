@@ -15,10 +15,16 @@ contract StorageIntroduction {
     uint256 zero;
     uint8 ten = 10;
     bool[2] answers = [false, true];
+    bytes secret = hex"CAFE";
     string pie = "apple pie";
     string cake = "chocolate cake";
     uint256[] numbers = [1, 2, 3];
     mapping(address => uint256) owe;
+
+    struct Person {
+        uint256 age;
+    }
+    Person person = Person({age:60});
 
     function demo() public {
         zero = 1;
@@ -37,26 +43,26 @@ contract StorageIntroduction {
 
     }
 
-    // Pointers
+    // Pointers/References
     /*
-    - Value types are always copied. You can only modify them via their original name, you cannot have references to them.
+    - Value types are always copied. You can only modify them via their original name, you cannot have pointers/references to them.
+    - You can only have references to data types.
     - Storage variables declared in the body of a function are just pointers to an actual storage variable.
     - You cannot assign new value to them, nor memory values. You can only assign real storage variables.
     */
     function pointerDemo() public {
-        uint twenty = ten*2;
+        uint twenty = ten*2; // This is valid, it checks the value of 'ten', copies it, and multiplies it with 2.
+
+        // string storage dessert = "cupcake"; // This is invalid, we cannot make a reference to a newly created value.
 
         string memory cupcake = "cupcake";
+        // string storage dessert = cupcake; // This is also invalid, we cannot refer to a memory value.
 
-        // string storage dessert = "cupcake";
-
-        // string storage dessert = cupcake;
-
-        // string storage dessert;
+        // string storage dessert; // This is also invalid as it would be a dangling reference.
         // console.log(dessert);
 
-        string storage dessert = pie;
-        console.log(dessert);
+        string storage dessert = pie; // This will refer to storage variable 'pie'.
+        console.log(dessert); // Prints "apple pie"
 
         //---
         
@@ -80,7 +86,7 @@ contract StorageIntroduction {
     - Storage parameters are similar to storage pointers.
     - It means you need to pass a storage variable of that type as parameter.
     - Because of that, only internal or private functions can have storage parameters. (We will explain in the next lecture what internal and external calls are.)
-    - The purpose of these parameters is if you explicitely want to perform an operation on a desired storage variable, but you want to decide at the time of the calling, which storage variable you want to perform on.
+    - The purpose of these parameters is if you explicitly want to perform an operation on an arbitrary storage variable, but you want to decide at the time of the calling, on which storage variable you want to perform it.
     */
     function parameterDemo(string storage favoriteDessert) internal {
         console.log("My favorite dessert is", favoriteDessert);
@@ -91,17 +97,17 @@ contract StorageIntroduction {
         parameterDemo(cake);
     }
 
-    function addAnElement(uint[] storage array, uint newElement) internal {
+    function addElement(uint[] storage array, uint newElement) internal {
         array.push(newElement);
-        console.log("New length from addAnElement:", array.length);
+        console.log("New length from addElement:", array.length);
     }
-    function addNine() public {
+    function fillArray() public {
         console.log("Length of original numbers:", numbers.length);
-        addAnElement(numbers, 9);
-        addAnElement(numbers, 9);
-        addAnElement(numbers, 9);
-        addAnElement(numbers, 9);
-        addAnElement(numbers, 9);
+        addElement(numbers, 0);
+        addElement(numbers, 1);
+        addElement(numbers, 2);
+        addElement(numbers, 3);
+        addElement(numbers, 4);
         console.log("Length of original numbers:", numbers.length);
     }
 }
