@@ -8,53 +8,55 @@ contract UnitsDemo {
     function demo() public {
 
         // Ether Units
-        uint x_wei = 1 wei; // == 1
-        uint x_gwei = 1 gwei; // == 1000000000 == 1e9
-        uint x_ether = 1 ether; // == 1000000000000000000 == 1e18
+        uint _wei = 1 wei; // == 1
+        uint _gwei = 1 gwei; // == 1000000000 == 1e9
+        uint _ether = 1 ether; // == 1000000000000000000 == 1e18
 
-        console.log(x_wei);
-        console.log(x_gwei);
-        console.log(x_ether);
+        console.log(_wei);
+        console.log(_gwei);
+        console.log(_ether);
         
         // Time Units
-        uint x_sec = 1 seconds; // == 1
-        uint x_min = 1 minutes; // == 60 seconds == 60
-        uint x_hour = 1 hours; // == 60 minutes == 3600
-        uint x_day = 1 days; // == 24 hours == 86400
-        uint x_week = 1 weeks; // == 7 days == 604800
+        uint _sec = 1 seconds; // == 1
+        uint _min = 1 minutes; // == 60 seconds == 60
+        uint _hour = 1 hours; // == 60 minutes == 3600
+        uint _day = 1 days; // == 24 hours == 86400
+        uint _week = 1 weeks; // == 7 days == 604800
         
-        console.log(x_sec);
-        console.log(x_min);
-        console.log(x_hour);
-        console.log(x_day);
-        console.log(x_week);
+        console.log(_sec);
+        console.log(_min);
+        console.log(_hour);
+        console.log(_day);
+        console.log(_week);
 
         console.log(1 weeks == 604800 wei); // prints true
 
         uint dayIndex = 5;
-        // uint secondsUntilEOD = dayIndex days;
-        uint secondsUntilEOD = dayIndex * 1 days;
+        // uint secondsUntilDeadline = dayIndex days;
+        uint secondsUntilDeadline = dayIndex * 1 days;
     }
 
-    function conversion_demo() public {
+    function conversionDemo() public {
         uint ethToUsd = 1852813012412; // 1852.813012412, 9 decimal places
         uint entryFeeInUsd = 50; // 0 decimal places
 
         uint transferedEth = 27012425000000000; // 0.027012425000000000, 18 decimal places
 
-        // Wrong: one is in "ETH", the other is in "USD"
+        // How to calculate if the value of the transferred ether is enough?
+
+        // 1) Wrong: one is in "ETH", the other is in "USD"
         if (transferedEth >= entryFeeInUsd) {
             // Do something
         }
 
-        // Better, still wrong: decimal places do not match
+        // 2) Better, unit of meassures are matching, but still wrong because decimal places do not match
         if (transferedEth * ethToUsd >= entryFeeInUsd) {
             // Do something
         }
         
-        // Right
+        // 3) Right
         /*
-        ethToUsd has 10 decimal places, so its in "gweis" (1852.813012412 * 1 gwei)
+        ethToUsd has 9 decimal places, so its in "gweis" (1852.813012412 * 1 gwei)
         entryFeeInUsd has 0 decimal places, it is in "weis"
         transferedEth has 18 decimal places, so its in "ethers" (0.027012425 * 1 ether)
         */
@@ -65,7 +67,7 @@ contract UnitsDemo {
             console.log("Entry fee :", entryFeeInUsd);
         }
 
-        // Even better
+        // 4) Even better
         /*
         Since division rounds toward zero, you can lose information.
         Especially if you perform operations in the wrong order.

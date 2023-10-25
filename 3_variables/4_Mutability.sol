@@ -26,27 +26,31 @@ contract MutabilityDemo {
     */
 
     // Variables
-    uint x_variable;
-    uint x_variable2 = 123;
+    uint regularVariable;
+    uint regularVariable2 = 123;
+    uint regularVariable3 = address(this).balance;
 
     // Constant
-    uint constant CONSTANT = 42;
-    // uint constant CONSTANT2 = address(this).balance; // Initial value for constant variable has to be compile-time constant
+    uint constant CONSTANT = 42; // Need to have an initial value
+    // uint constant CONSTANT2 = address(this).balance; // Initial value for constant variables has to be compile-time constant
+    // Any expression that accesses storage, blockchain data (e.g. block.timestamp, address(this).balance or block.number) or execution data (msg.value or gasleft()) are not allowed
 
     // Immutable
-    uint immutable i_immutable;
-    uint immutable i_immutable2 = 7331;
-    uint immutable i_immutable3 = address(this).balance;
+    uint immutable i_immutableVariable;
+    uint immutable i_immutableVariable2 = 7331;
+    uint immutable i_immutableVariable3 = address(this).balance;
 
     // Reference types
+    // Constants can have string or bytes type besides value types.
     string constant C_STRING = "apple";
     bytes constant C_BYTES = hex"1234CAFE";
-    // string immutable i_string = "pear";
+    // string immutable i_string = "pear"; // Immutable variables can only have value types.
     // bytes immutable i_bytes = hex"C0FFEE";
 
 
     constructor() {
-        i_immutable = 1337;
-        // x_immutable = 1338; // Cannot reassign
+        i_immutableVariable = 1337;
+        // i_immutableVariable = 1338; // Cannot reassign
+        // i_immutableVariable2 = 1338;
     }
 }
