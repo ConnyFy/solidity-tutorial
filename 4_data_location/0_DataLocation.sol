@@ -42,21 +42,6 @@ Reference types
 */
 
 /*
-
-Memory
-- Memory is a more light-weight, it acts as the "short-term" memory of a contract.
-- Memory variables live up to a function call (transaction), after they are erased.
-- It is very similar to the RAM of a computer. Writing memory variables is way cheaper than storage variables.
-
-Calldata
-- Calldata is a special data location that is very similar to memory.
-- It is where arguments of a function call and transaction data live.
-- Comparing to memory the difference is that accessing calldata variables is even cheaper but they are read-only, meaning you cannot declare or assign to calldata variables.
-
-Stack
-*/
-
-/*
 In Solidity, the layout of the memory is a bit different than in traditional programs.
 Instead of separating the memory space into two parts (stack and heap), it is separated into 3+1 parts (stack, memory, storage and calldata).
 - Stack is the same in the two cases
@@ -79,8 +64,8 @@ Stack
 
 Memory
 - Memory is the "short-term" memory of a smart contract that is meant to store reference variables declared inside a function call.
-- It is very similar to the heap, you can think on it as the RAM in your computer.
-- It is freshly cleared for each transaction.
+- It is very similar to the heap. It is like the RAM of your computer. Writing memory variables is way cheaper than storage variables.
+- Memory variables live up to a function call (transaction), after they are erased.
 
     What is stored here?
         - Reference type variables inside function calls (either in the function body or as a function parameter) that are marked with the 'memory' keyword.
@@ -107,7 +92,7 @@ Storage
     Where is it located?
         - Data stored in storage does not occupy space in the EVM memory directly. Instead, it's stored on the Ethereum blockchain itself.
         - Storage is a key-value store that maps 256-bit words to 256-bit words.
-        - Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32-byte (256-bit) values.
+        - Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32-byte (256-bit) values. Elements of Storage is also referred as slots.
             - Of course that is not how it actually stored as that number is approximately the number of atoms in the observable universe.
             - It is implemented by a slotindex -> slotvalue mapping that maps 32-byte keys to 32-byte values.
         - It is like a mixture of a stack and a heap
@@ -115,9 +100,10 @@ Storage
             - For reference type variables, however, the actual data is stored somewhere else. Instead of using pointer, this location is calculated based on the the variable's offset in the array.
 
 Calldata
-- Calldata is a non-modifiable, non-persistent area where function arguments are stored, and behaves mostly like memory.
-- It is read-only, you cannot create calldata variables or overwrite existing ones.
-- Calldata is cheaper to access than memory.
+
+- Calldata is a special data location that is very similar to memory.
+- It is a read-only area where function arguments are stored.
+- Comparing to memory the difference is that accessing calldata variables is even cheaper but they are read-only, meaning you cannot declare or assign to calldata variables.
 
     What is stored here?
         - Referene type variables in a function's parameter list that are marked with 'calldata'.
