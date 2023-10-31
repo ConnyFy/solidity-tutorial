@@ -22,3 +22,12 @@ Stack
 - The good old stack, known from every programming language.
 - Value-type variables declared inside a function.
 */
+
+/*
+                | Contract-level    | Function declared | Function parameter
+--------------------------------------------------------------------------------
+Value types     | Storage           | Stack             | Stack
+--------------------------------------------------------------------------------
+Reference types | Storage           | Memory            | Memory / Calldata
+--------------------------------------------------------------------------------
+*/
