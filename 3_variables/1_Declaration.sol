@@ -11,7 +11,7 @@ contract DeclarationDemo {
     // (uint numberStorage3, uint numberStorage4) = (33, 44); // In storage you cannot initialize multiple variables in one line
     // numberStorage2 = 2; // you cannot use assignment
 
-    function demo() public view {
+    function demo() public {
         // Declaration, Initialization
         // type (memory_location) name;
         // type (memory_location) name = initial_value;

@@ -20,7 +20,7 @@ contract StoragePacked {
     function getStorageAt(uint idx) public view returns (uint r) {
         assembly {
             r := sload (idx)
-        }   
+        }
     }
     // https://www.rapidtables.com/convert/number/decimal-to-binary.html
     // 285803779 -> 00010001 00001001 00000101 00000011 -> 17 9 5 3

@@ -37,7 +37,6 @@
     - Visibility
     - Mutability (const, immutable)
     - Units
-    - Globally available variables
 
 ## Part 3
 
@@ -46,6 +45,7 @@
     - Storage
     - Memory
     - Calldata
+    - Assignment between different locations
 
 ## Part 4
 
@@ -54,7 +54,7 @@
     - Paramteres and return types, named params, omitted params
     - Visibility
     - Internal/External call type
-    - Data access
+    - Data access, transaction vs call
     - Modifiers
 
 - **Control structures**
@@ -79,7 +79,8 @@
 
 ## Part 6
 
-- **ABI**
+- **ABI** 
+- **Other globally available variables**
 
 ## Part 7
 
@@ -121,6 +122,7 @@
             - Gas Optimization Techniques
         - Unchecked arithmetics
         - Inline assembly
+    - How EVM works
     - Scaling
         - Layer 2 scaling solutions
             - Side channels

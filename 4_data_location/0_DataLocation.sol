@@ -63,9 +63,11 @@ Stack
             - It is not possible to just access arbitrary elements deeper in the stack without first removing the top of the stack.
 
 Memory
-- Memory is the "short-term" memory of a smart contract that is meant to store reference variables declared inside a function call.
-- It is very similar to the heap. It is like the RAM of your computer. Writing memory variables is way cheaper than storage variables.
-- Memory variables live up to a function call (transaction), after they are erased.
+- The EVM operates as a stack machine on 32-bytes words. When the EVM encounters data larger than 32-bytes (complex types like string, bytes, struct or arrays), it cannot process them on the stack.
+- Memory is meant to store reference variables declared inside a function call.
+- It is very similar to the heap. It is like the RAM of your computer.
+- Writing memory variables is way cheaper than storage variables.
+- Memory variables live up to a function call (transaction), after they are erased. Compared to Storage, Memory is also called the "short-term" memory of a smart contract.
 
     What is stored here?
         - Reference type variables inside function calls (either in the function body or as a function parameter) that are marked with the 'memory' keyword.

@@ -37,9 +37,11 @@ contract ArrayDemo {
 
         // So, dynamic arrays in memory are dynamic in the meaning they can be assigned to an arbitrary length array.
         // But, once assigned, they cannot be expanded. (Of course, you could allocate a bigger array, and copy the elements).
+        // Actually, this is how dynamic arrays work in other languages. For example in Java, you might call .add() on a List.
+        // It seems that you can simply add elements to it, but under the hood it allocates a large-enough array initially and tracks the actual size.
+        // If it runs out of free elements, it allocates a new, bigger array and copies the elements from the old one.
 
-        // Real dynamic arrays live in storage
-
+        // Real dynamic arrays live in storage. By real, I mean that you can simply keep adding elements to it without the need to ever re-allocate and copy elements.
         console.log(dynamicArray.length); // Outputs 0
         dynamicArray.push();
         console.log(dynamicArray.length); // Outputs 1
