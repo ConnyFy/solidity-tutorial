@@ -142,11 +142,7 @@ contract MemoryIntroduction {
     */
 
     function d_concatArray(uint8 a, uint8 b, uint8 c) public returns (uint8[3] memory) {
-        uint8[3] memory result;
-        result[0] = a;
-        result[1] = b;
-        result[2] = c;
-
+        uint8[3] memory result = [a, b, c];
         return result;
     }
 

@@ -8,7 +8,6 @@ Solidity reserves the first four 32-byte slots in Memory.
 - 0x00 - 0x3f: Scratch space. It refers to an area in memory that is used temporarily for intermediate computations. It is a working area for more complex calculations e.g. hashing.
 - 0x40 - 0x5f: Free memory pointer (FMP). It is used for memory allocations. Free memory pointer points to the first unused* slot in the memory.
 - 0x60 - 0x7f: Zero slot. According to the docs, it contains zeroes, should not be overwritten and is used as the initial value for empty dynamic memory arrays.
-    However, it is mainly just a gap between the reserved slots and the allocated variables.
 
 In Solidity, memory is never freed. There is no garbage collector and memory variables cannot go out of scope. The FMP keeps getting higher and higher, new objects are allocated sequentally after each other.
 */
