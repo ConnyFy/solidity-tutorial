@@ -257,78 +257,78 @@ contract ContractA {
 
     
     // Finally, let's talk about execution context in case of internal calls.
-    function method3_A() public view returns (
-        uint msizeA,
-        uint msizeB
-    ) {
-        uint[2] memory numbers = [uint(1),2];
-        msizeB = method3_B();
+    // function method3_A() public view returns (
+    //     uint msizeA,
+    //     uint msizeB
+    // ) {
+    //     uint[2] memory numbers = [uint(1),2];
+    //     msizeB = method3_B();
 
-        assembly {
-            msizeA := msize()
-        }
-    }
+    //     assembly {
+    //         msizeA := msize()
+    //     }
+    // }
 
-    function method3_B() public view returns (uint msizeB) {
-        uint[2] memory numbers = [uint(3),4];
+    // function method3_B() public view returns (uint msizeB) {
+    //     uint[2] memory numbers = [uint(3),4];
         
-        assembly {
-            msizeB := msize()
-        }
-    }
-    /*
-        If we call method3_B() directly, we just create a two-element array with 3 and 4.
-        The Memory will be:
-        0x00 -> Scratch space
-        0x20 -> Scratch space
-        0x40 -> FMP
-        0x60 -> Zero slot
-        0x80 -> 3
-        0xA0 -> 4
-        0xC0        <- FMP
+    //     assembly {
+    //         msizeB := msize()
+    //     }
+    // }
+    // /*
+    //     If we call method3_B() directly, we just create a two-element array with 3 and 4.
+    //     The Memory will be:
+    //     0x00 -> Scratch space
+    //     0x20 -> Scratch space
+    //     0x40 -> FMP
+    //     0x60 -> Zero slot
+    //     0x80 -> 3
+    //     0xA0 -> 4
+    //     0xC0        <- FMP
 
-        msizeB == 0xC0 (192)
-        This is exactly what we have expected.
-        ---
+    //     msizeB == 0xC0 (192)
+    //     This is exactly what we have expected.
+    //     ---
 
-        Now, call method3_A(), that after creating an array with two elements (1 and 2), calls method3_B().
-        method3_B() simply returns msizeB. We query msize at the end of method3_A().
-        Think about what msizeA and msizeB can be.
-        It would be reasonable to expect 0xC0 for both of them, as we create a two-element array in each of them.
-        Well, let's see.
+    //     Now, call method3_A(), that after creating an array with two elements (1 and 2), calls method3_B().
+    //     method3_B() simply returns msizeB. We query msize at the end of method3_A().
+    //     Think about what msizeA and msizeB can be.
+    //     It would be reasonable to expect 0xC0 for both of them, as we create a two-element array in each of them.
+    //     Well, let's see.
 
-        msizeA == msizeB == 0x100 (256)
+    //     msizeA == msizeB == 0x100 (256)
 
-        How? Let's deconstruct the method call.
+    //     How? Let's deconstruct the method call.
 
-        First, we create the array of [1,2]:
-        0x00 -> Scratch space
-        0x20 -> Scratch space
-        0x40 -> FMP
-        0x60 -> Zero slot
-        0x80 -> 1
-        0xA0 -> 2
-        0xC0        <- FMP
+    //     First, we create the array of [1,2]:
+    //     0x00 -> Scratch space
+    //     0x20 -> Scratch space
+    //     0x40 -> FMP
+    //     0x60 -> Zero slot
+    //     0x80 -> 1
+    //     0xA0 -> 2
+    //     0xC0        <- FMP
 
-        Then we make an INTERNAL call to beta(). Since it is an internal call, there is no context change!
-        Remember back, Memory is cleared when a new execution context is created.
-        In this case, there was no new execution context created.
-        Even though we call another function, everything is kept in Memory.
-        The allocation of [3,4] happens as it was in the same function:
-        0x00 -> Scratch space
-        0x20 -> Scratch space
-        0x40 -> FMP
-        0x60 -> Zero slot
-        0x80 -> 1
-        0xA0 -> 2
-        0xC0 -> 3
-        0xE0 -> 4
-        0x100       <- FMP
+    //     Then we make an INTERNAL call to beta(). Since it is an internal call, there is no context change!
+    //     Remember back, Memory is cleared when a new execution context is created.
+    //     In this case, there was no new execution context created.
+    //     Even though we call another function, everything is kept in Memory.
+    //     The allocation of [3,4] happens as it was in the same function:
+    //     0x00 -> Scratch space
+    //     0x20 -> Scratch space
+    //     0x40 -> FMP
+    //     0x60 -> Zero slot
+    //     0x80 -> 1
+    //     0xA0 -> 2
+    //     0xC0 -> 3
+    //     0xE0 -> 4
+    //     0x100       <- FMP
 
-        At the end of method3_B(), msize() is equal to 0x100.
-        After returning from method3_B, it is still the same execution context. msize() is equal to 0x100 here too.
+    //     At the end of method3_B(), msize() is equal to 0x100.
+    //     After returning from method3_B, it is still the same execution context. msize() is equal to 0x100 here too.
 
-        Keeping everything in Memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
-        Method parameters and return values are already in the Memory, so the caller/called method can simply set pointers at them.
-    */
+    //     Keeping everything in Memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
+    //     Method parameters and return values are already in the Memory, so the caller/called method can simply set pointers at them.
+    // */
 }
