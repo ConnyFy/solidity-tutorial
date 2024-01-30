@@ -14,6 +14,7 @@ contract StorageIntroduction {
     uint8 ten;
     bool[2] answers = [false, true];
     bytes secret = hex"CAFE";
+    string keyword = "magic";
     uint256[] numbers = [1, 2, 3];
     mapping(address => uint256) owe;
 

@@ -41,6 +41,7 @@ contract MemoryIntroduction {
         uint8 ten;
         bool[2] memory answers = [false, true];
         bytes memory secret = hex"CAFE";
+        string memory keyword = "magic";
         Person memory person = Person({age:60});
         
         // Contrary to Storage, we cannot create mappings in Memory.
