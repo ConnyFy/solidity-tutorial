@@ -55,8 +55,8 @@ contract CalldataLayout {
         0000000000000000000000000000000000000000000000000000000000000003 -+
 
         Fixed arrays are inlined if the base type can be inlined.
-        Fixed arrays of value types are always inlined because of this,
-        however, fixed arrays of some structs might not be.
+        Fixed arrays of value types are always inlined because of this.
+        However, fixed arrays of non-inlinable types are also not-inlinable. We will see it soon.
         */
     }
     function b3_withDynamicArray(uint[] calldata numbers) public view returns (bytes calldata calldataResult) {
@@ -65,7 +65,7 @@ contract CalldataLayout {
         numbers == [1,2,3,4]
         ----------
         0xcfa90f7b <- Function selector
-        0000000000000000000000000000000000000000000000000000000000000020 - Pointer, where numbers starts
+        0000000000000000000000000000000000000000000000000000000000000020 - Pointer to numbers
         0000000000000000000000000000000000000000000000000000000000000004 -+ <- numbers
         0000000000000000000000000000000000000000000000000000000000000001  |
         0000000000000000000000000000000000000000000000000000000000000002  |
@@ -89,13 +89,14 @@ contract CalldataLayout {
         data == 0xCAFECAFE
         ----------
         0x16c89958 <- Function selector
-        0000000000000000000000000000000000000000000000000000000000000020 - Pointer, where data starts
+        0000000000000000000000000000000000000000000000000000000000000020 - Pointer to data
         0000000000000000000000000000000000000000000000000000000000000004 -+ <- data
         cafecafe00000000000000000000000000000000000000000000000000000000 -+
 
         Just like for dynamic arrays, a pointer is created, then comes the actual data. Bytes and string types are tight-packed like in Memory.
         */
     }
+
     // Now, look at a more complex example, to truly understand how calldata is encoded.
     struct Person {
         uint age;
@@ -103,7 +104,6 @@ contract CalldataLayout {
         uint[] favoriteNumbers;
         Car car;
         Experience experience;
-
     }
     struct Car {
         uint manufactureYear;
