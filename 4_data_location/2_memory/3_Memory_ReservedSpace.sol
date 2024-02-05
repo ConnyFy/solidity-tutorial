@@ -93,7 +93,7 @@ contract MemoryReservedSpace {
         0x1A0
         */
 
-        // Since FMP was not updated, normal memory allocations starts from the address FMP points to.
+        // Since FMP was not updated, normal memory allocations start from the address FMP points to.
         // This allocation will overwrite 0x160 with 0 (default value of uint), also, update FMP.
         uint8[3] memory numbers2 = [6,7,8];
         /*

@@ -42,6 +42,7 @@ contract CalldataIntroduction {
     /*
     Pointers/References
     - Technically, Calldata pointers work the same way as Memory pointers, but since Calldata is immutable, you cannot really do much with pointers.
+    - Parameters also work as pointers.
     */
     
     function b_pointerDemo(

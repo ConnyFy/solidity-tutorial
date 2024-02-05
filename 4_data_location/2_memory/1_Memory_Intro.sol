@@ -110,7 +110,8 @@ contract MemoryIntroduction {
 
     /*
     Parameters:
-    - Memory parameters are mutable references of a data. It can come from an already existing memory variable (internal call), or from transaction data (external call).
+    - Memory parameters are mutable references of a data. They can come from an already existing memory variable (internal call), or from transaction data (external call).
+    - They are technically memory pointers too.
     */
 
     function c_printArray(uint8[3] memory array) public {
@@ -140,6 +141,7 @@ contract MemoryIntroduction {
     /*
     Return value:
     - If you want to return a reference type, it usually have memory data location (sometimes calldata, but it is rarely used).
+    - Memory return values also work as memory pointers.
     */
 
     function d_concatArray(uint8 a, uint8 b, uint8 c) public returns (uint8[3] memory) {
