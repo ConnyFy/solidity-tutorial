@@ -7,6 +7,9 @@
 - **Introduction**
     - What is Solidity
     - Getting started
+    - Structure of a .sol file
+
+## Part 2
 
 - **Data types**
     - Value types
@@ -29,7 +32,7 @@
     - i++, ++i
     - delete
 
-## Part 2
+## Part 3
 
 - **Variables**
     - Declaration
@@ -38,7 +41,7 @@
     - Mutability (const, immutable)
     - Units
 
-## Part 3
+## Part 4
 
 - **Data location**
     - Introduction
@@ -47,7 +50,7 @@
     - Calldata
     - Assignment between different locations
 
-## Part 4
+## Part 5
 
 - **Functions**
     - Declaration
