@@ -6,7 +6,7 @@ import "hardhat/console.sol";
 /*
 Storage
 - It is a quite unique mechanism, nothing you would see in any other programming language.
-- As mentioned, the purpose of Storage is to store long-term data, that needs no be persisted between calls to the contract, between transactions, throughout the whole life of the contract. That is why storage is also reffered as State.
+- As mentioned, the purpose of storage is to store long-term data, that needs no be persisted between calls to the contract, between transactions, throughout the whole life of the contract. That is why storage is also reffered as State.
 */
 
 contract StorageIntroduction {
@@ -88,9 +88,13 @@ contract StorageIntroduction {
 
     /*
     Parameters
-    - Storage parameters are similar to storage pointers.
+    - Technically, storage parameters are also storage pointers.
     - It means you need to pass a storage variable of that type as parameter.
-    - Because of that, only internal or private functions can have storage parameters. (We will explain in the next lecture what internal and external calls are.)
+    - Because of that, only internal or private functions can have storage parameters.
+        - We will explain in the next lecture what internal and external calls are, but for short, internal calls are coming from the same contract, while external calls are coming from "outside" of the contract.
+        - Storage parameters are also just pointers to a storage slot. Calling a function with storage parameters won't create any new data in storage, just setting a pointer.
+        - Allowing storage parameters from external calls would be unstable, as not the real data should be sent to the function, but a "pointer value".
+        - Theoritically, you could create a workaround, but you also need to validate the passed slot index.
     - The purpose of these parameters is if you explicitly want to perform an operation on an arbitrary storage variable, but you want to decide at the time of the calling, on which storage variable you want to perform it.
     */
     function d_printDessert(string storage favoriteDessert) internal {
@@ -98,8 +102,8 @@ contract StorageIntroduction {
     }
 
     function d_favoriteDesserts() public {
-        d_parameterDemo(pie);
-        d_parameterDemo(cake);
+        d_printDessert(pie);
+        d_printDessert(cake);
     }
 
     // Just like in case of storage pointers, you can modify the original data through the parameter.
@@ -111,12 +115,40 @@ contract StorageIntroduction {
     uint[] odd;
     uint[] even;
     function e_fillArrays() public {
-        e_addElement(odd, 1);
-        e_addElement(even, 2);
-        e_addElement(odd, 3);
-        e_addElement(even, 4);
-        e_addElement(odd, 5);
+        e_addElementToArray(odd, 1);
+        e_addElementToArray(even, 2);
+        e_addElementToArray(odd, 3);
+        e_addElementToArray(even, 4);
+        e_addElementToArray(odd, 5);
         console.log("Length of odd numbers:", odd.length);
         console.log("Length of even numbers:", even.length);
+    }
+
+    /*
+    Return value
+    - Return values can also have storage as their data location.
+    - It is also only allowed for internal or private functions.
+    - It needs to have a value assigned, as it has no default value.
+    */
+    function f_getOddNumbers() internal returns (uint[] storage array) {
+        array = odd;
+    }
+
+    function f_getOddNumbersPub() public {
+        uint[] storage _odd = f_getOddNumbers();
+        console.log("Length of odd numbers:", _odd.length);
+    }
+
+    // A hacky way to allow "storage parameter".
+    function x_getNumbers(uint slotIndex) public view returns (uint[] memory result) {
+        require(slotIndex == 11 || slotIndex == 12, "You can only query odd(11) or even(12)");
+
+        uint[] storage numbers;
+
+        assembly {
+            numbers.slot := slotIndex
+        }
+
+        result = numbers;
     }
 }

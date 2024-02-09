@@ -4,7 +4,7 @@ This will be just a very short introduction as we will cover it in more details 
 There are 4 way we can declare a variable in terms of data storage.
 
 Storage
-- The purpose of Storage is to store long-term data, that needs no be persisted between calls to the contract, between transactions, throughout the whole life of the contract.
+- The purpose of storage is to store long-term data, that needs no be persisted between calls to the contract, between transactions, throughout the whole life of the contract.
 - Storage is also reffered as State.
 - Variables defined outside of functions (i.e. at contract-level) are storage variables.
 

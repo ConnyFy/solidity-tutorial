@@ -25,7 +25,7 @@ contract OperatorsDemo {
         // Mapping
         mappingVariable[10] = 20;
         delete mappingVariable[10]; // Equivalent to mappingVariable[10] = 0;
-        // delete mappingVariable; // Invalid, we cannot reset the whole mapping (remember, we do not have a list of keys)
+        // delete mappingVariable; // Invalid, we cannot reset the whole mapping, because we cannot get a list of existing keys.
 
         // Array
         arrayVariable.push(1);

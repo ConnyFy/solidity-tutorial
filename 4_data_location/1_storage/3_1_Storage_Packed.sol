@@ -71,7 +71,10 @@ contract StoragePacked {
 }
 
 /*
-- Tight packing is a double-edged sword. We can say it is mainly beneficial because the compiler can optimize variable reads and writes so that you can access multiple variables with a single read or write command
+- Tight packing is a double-edged sword. We can say it is mainly beneficial because the compiler can optimize variable reads and writes so that you can access multiple variables with a single read or write command.
+- This is mainly beneficial, because writes to an empty storage space "costs more", than writes to a non-empty slot. The first write of a packed slot is the same, but all the following ones are cheaper.
+- Reads also have a cost, and by packing variables in a slot, the EVM can access multiple values with just one storage read.
+
 - However, there are scenarios when it can backfire. If you only updating one part of a slot, leaving the rest unchanged, the compiler needs to do additional arithmetic logic to extract and to modify only that specific part of the storage.
 - For example if you have a variable that is changed quite frequently and the adjescent ones are not, it might be better to reorder declarations and put the frequently changing variable into a separate 32-byte type.
 - In a later lecture, I am going to explain more optimization techniques.

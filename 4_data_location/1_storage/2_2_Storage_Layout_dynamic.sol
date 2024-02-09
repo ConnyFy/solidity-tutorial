@@ -42,5 +42,12 @@ contract StorageLayout {
 
     function addToMapping(uint256 key, uint256 value) public {
         e[key] = value;
-    }   
+    }
+
+    // TODO: Explanation, that is why we cannot query the elements of a mapping or delete it
+    // TODO: How concatenation and padding works
+    // TODO: What if the base type is not 32-byte long?
+    // https://docs.soliditylang.org/en/v0.8.19/internals/layout_in_storage.html#mappings-and-dynamic-arrays
+    // TODO: Add multidimension array demo to array demo
+    // TODO: Add mapping of mapping demo
 }

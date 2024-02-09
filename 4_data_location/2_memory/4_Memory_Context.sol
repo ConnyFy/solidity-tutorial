@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 /*
 Let's talk about execution context.
@@ -13,14 +13,14 @@ We had to make this differentiation because they behave differently, but we will
 */
 
 /*
-As mentioned, Memory is meant for short-term data storage, it is refreshed between transactions.
+As mentioned, memory is meant for short-term data storage, it is refreshed between transactions.
 Memory is not only refreshed between transactions, but also cleared at changes of execution context.
 
-An execution context is simply a boundary between external calls. When we create a new execution context - by an external method call - the Memory is reset.
-When you make the first call (i.e. a beginning of a transaction) to a method of ContractA, it is the first execution context, introducing a fresh and clean Memory instance.
-Let's say, inside that method, ContractA calls a function of ContractB. That is a new context, the Memory is cleared.
-When this function of ContractB returns back, we restore the previous execution context and the data that was present in Memory before the context change.
-Now, ContractA calls a function of itself (internal call), the EVM stays in the same context, Memory is not cleared.
+An execution context is simply a boundary between external calls. When we create a new execution context - by an external method call - the memory is reset.
+When you make the first call (i.e. a beginning of a transaction) to a method of ContractA, it is the first execution context, introducing a fresh and clean memory instance.
+Let's say, inside that method, ContractA calls a function of ContractB. That is a new context, the memory is cleared.
+When this function of ContractB returns back, we restore the previous execution context and the data that was present in memory before the context change.
+Now, ContractA calls a function of itself (internal call), the EVM stays in the same context, memory is not cleared.
 */
 contract ContractA {
     function A() public view returns (
@@ -44,7 +44,7 @@ contract ContractA {
     }
     /*
         If we call B() directly, we just create a two-element array with 3 and 4.
-        The Memory will be:
+        The memory will be:
         0x00 -> Scratch space
         0x20 -> Scratch space
         0x40 -> FMP
@@ -77,9 +77,9 @@ contract ContractA {
         0xC0        <- FMP
 
         Then we make an INTERNAL call to B(). Since it is an internal call, there is no context change!
-        Remember back, Memory is cleared when a new execution context is created.
+        Remember back, memory is cleared when a new execution context is created.
         In this case, there was no new execution context created.
-        Even though we call another function, everything is kept in Memory.
+        Even though we call another function, everything is kept in memory.
         The allocation of [3,4] happens as it was in the same function:
         0x00 -> Scratch space
         0x20 -> Scratch space
@@ -94,8 +94,8 @@ contract ContractA {
         At the end of B(), msize() is equal to 0x100.
         After returning from B, it is still the same execution context. msize() is equal to 0x100 here too.
 
-        Keeping everything in Memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
-        Method parameters and return values are already in the Memory, so the caller/called method can simply set pointers at them.
+        Keeping everything in memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
+        Method parameters and return values are already in the memory, so the caller/called method can simply set pointers at them.
     */
 
     // Now, let's see what happens in case of an external call.
@@ -128,7 +128,7 @@ contract ContractB {
     /*
         If we call ContractB.extB() directly, it is technically the same when we called ContractA.B() directly.
         We just create a two-element array with 3 and 4.
-        The Memory will be:
+        The memory will be:
         0x00 -> Scratch space
         0x20 -> Scratch space
         0x40 -> FMP
@@ -144,7 +144,7 @@ contract ContractB {
         Let's call ContractA.extA(), that will call ContractB.extB() after creating a two-element array (1 and 2).
         In the previous case, we got
         msizeA == msizeB == 0x100 (256)
-        Now, it is an EXTERNAL call, so we expect a reset in Memory because there will be an execution context switch.
+        Now, it is an EXTERNAL call, so we expect a reset in memory because there will be an execution context switch.
         Now the result is:
         msizeA == 0xE0 (224)
         mszieB == 0xC0 (192)
@@ -178,7 +178,7 @@ contract ContractB {
 
         Now, something will happen that we haven't covered yet but will talk about in-depth in the next chapter.
         Because the return values of extB() live in a separate execution context (EC2), we cannot simply set pointers at them, or get them from the stack (in case of value types).
-        Somehow, they are need to be moved back to the caller's execution context (EC1). The EVM does this by copying every return variable to the Memory of the caller's EC.
+        Somehow, they are need to be moved back to the caller's execution context (EC1). The EVM does this by copying every return variable to the memory of the caller's EC.
         By every return variable, I am truly mean every, including value types. Here, there is only one return variable of the called method (msizeB) that can fit in a single slot.
         
         EC1
@@ -193,8 +193,8 @@ contract ContractB {
 
         At last, extA() also calls msize() that is equal to 0xE0.
 
-        Do not worry about this last part of copying return variables to the Memory. We wil cover it in the next chapter.
-        For now, concentrate on the fact that in case external calls, a new execution context was created and Memory was reset. However, everything is kept in Memory for internal calls.
+        Do not worry about this last part of copying return variables to the memory. We wil cover it in the next chapter.
+        For now, concentrate on the fact that in case external calls, a new execution context was created and memory was reset. However, everything is kept in memory for internal calls.
 
         The results again:
         Internal call:

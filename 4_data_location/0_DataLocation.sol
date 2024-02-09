@@ -67,7 +67,7 @@ Memory
 - Memory is meant to store reference variables declared inside a function call.
 - It is very similar to the heap. It is like the RAM of your computer.
 - Writing memory variables is way cheaper than storage variables.
-- Memory variables live up to a function call (transaction), after they are erased. Compared to Storage, Memory is also called the "short-term" memory of a smart contract.
+- Memory variables live up to a function call (transaction), after they are erased. Compared to storage, memory is also called the "short-term" memory of a smart contract.
 
     What is stored here?
         - Reference type variables inside function calls (either in the function body or as a function parameter) that are marked with the 'memory' keyword.
@@ -80,12 +80,12 @@ Memory
             - Memory is more costly the larger it grows (it scales quadratically).
 
 Storage
-- Storage is the "long-term" memory where contract-scoped or in other words state variables are stored.
+- Storage is the "long-term memory" where contract-scoped or in other words state variables are stored.
 - They are persistent between function calls, and are meant to store the state of a contract.
 - You can think on it like the storage of your computer - it is where you store data that will be present even if you restart you computer.
 - Writing to the storage is very expensive, so one should only store the really necessary things in it.
 - The layout of the storage is fixed once the contract is created. You cannot create new or delete existing storage variables.
-- Each contract can maintain their own Storage and can access - meaning both reading and writing - only their own data by default.
+- Each contract can maintain their own storage and can access - meaning both reading and writing - only their own data by default.
 - The only way contract A can read or write contract B storage is when contract B exposes functions that enable it to do so.
 
     What is stored here?
@@ -94,7 +94,7 @@ Storage
     Where is it located?
         - Data stored in storage does not occupy space in the EVM memory directly. Instead, it's stored on the Ethereum blockchain itself.
         - Storage is a key-value store that maps 256-bit words to 256-bit words.
-        - Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32-byte (256-bit) values. Elements of Storage is also referred as slots.
+        - Technically it is a huge array with full of zeros. It has a length of 2^256 and contains 32-byte (256-bit) values. Elements of storage is also referred as slots.
             - Of course that is not how it actually stored as that number is approximately the number of atoms in the observable universe.
             - It is implemented by a slotindex -> slotvalue mapping that maps 32-byte keys to 32-byte values.
         - It is like a mixture of a stack and a heap
@@ -105,7 +105,7 @@ Calldata
 
 - Calldata is a special data location that is very similar to memory.
 - It is a read-only area where function arguments are stored.
-- Comparing to memory the difference is that accessing calldata variables is even cheaper but they are read-only, meaning you cannot declare or assign to calldata variables.
+- Compared to memory the difference is that accessing calldata variables is even cheaper but they are read-only, meaning you cannot declare or assign to calldata variables.
 
     What is stored here?
         - Referene type variables in a function's parameter list that are marked with 'calldata'.

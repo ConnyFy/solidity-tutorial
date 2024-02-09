@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
 
 contract CalldataLayout {
     
-    // Let's see how Calldata looks like. As mentioned, it is a static part of the transaction data, not stored in the memory of the EVM or on the blockchain.
+    // Let's see how calldata looks like. As mentioned, it is a static part of the transaction data, not stored in the memory of the EVM or on the blockchain.
     // Solidity gives us a handy way to reach calldata from a function.
     // msg.data (type: bytes calldata) allows us to directly read calldata.
     // We will talk about other global variables like msg or tx in details in a later section. For now, just remember that msg.data allows to read calldata.
@@ -74,13 +74,13 @@ contract CalldataLayout {
 
         Dynamic arrays are never inlined. Instead, a pointer is created, that points to the actual location of the dynamic array.
         This behaviour is very similar to ones we have already seen.
-        In Storage, dynamic arrays are also stored at a separate location (determined by the hash of the slotnumber). In the actual slot, the length of the array is stored.
-        Another place we have seen something similar is stucts in Memory. There, a layout for the struct is created - reference values are stored as pointers, then set to the allocated data.
-            The exact same thing happens here too. One difference is that in Memory structs, fixed size data was also represented by a pointer. Why? Because you could allocate new data and just change the pointer.
-            Since Calldata is immutable, fixed size data is simply inlined. Just as we saw it in the previous step.
+        In storage, dynamic arrays are also stored at a separate location (determined by the hash of the slotnumber). In the actual slot, the length of the array is stored.
+        Another place we have seen something similar is stucts in memory. There, a layout for the struct is created - reference values are stored as pointers, then set to the allocated data.
+            The exact same thing happens here too. One difference is that in memory structs, fixed size data was also represented by a pointer. Why? Because you could allocate new data and just change the pointer.
+            Since calldata is immutable, fixed size data is simply inlined. Just as we saw it in the previous step.
 
         Okey, so what is that 0x20? It is a pointer to the second calldata slot. When function parameters are encoded for calldata, the function selector is ignored. The first byte of the parameters is the first byte of the first parameter.
-        From here, just like in Memory, slots are incremented by 0x20. The first slot (here, the pointer) is at 0x00. The second slot (where the actual data of numbers is) is at 0x20 - by the way, this is the length of the array. Then 0x40, 0x60 etc.
+        From here, just like in memory, slots are incremented by 0x20. The first slot (here, the pointer) is at 0x00. The second slot (where the actual data of numbers is) is at 0x20 - by the way, this is the length of the array. Then 0x40, 0x60 etc.
         */
     }
     function b4_withBytes(bytes calldata data) public view returns (bytes calldata calldataResult) {
@@ -93,7 +93,7 @@ contract CalldataLayout {
         0000000000000000000000000000000000000000000000000000000000000004 -+ <- data
         cafecafe00000000000000000000000000000000000000000000000000000000 -+
 
-        Just like for dynamic arrays, a pointer is created, then comes the actual data. Bytes and string types are tight-packed like in Memory.
+        Just like for dynamic arrays, a pointer is created, then comes the actual data. Bytes and string types are tight-packed like in memory.
         */
     }
 
@@ -170,7 +170,7 @@ contract CalldataLayout {
         One last step is to set the pointer in person to 0x100.
         But wait, it says 0xE0, not 0x100. What happened?
         Well, calldata is constructed recursively. When a complex structure is created that that has a variable size substructure, a pointer is created for that subpart.
-        The value of the pointer, however, is not measured absolutely like in Memory, but relatively to the beginning of the structure it is part of.
+        The value of the pointer, however, is not measured absolutely like in memory, but relatively to the beginning of the structure it is part of.
         
         person starts from 0x20, counting from here, the slot where person.favoriteNumber is placed is not 0x100 anymore, but 0xE0. That is how we got that 0xE0.
 

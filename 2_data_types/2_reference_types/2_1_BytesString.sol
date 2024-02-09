@@ -3,7 +3,7 @@ pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
-
+// TODO: Slice demo, maybe move 1_3_ArraySlice after this and merge it with bytes and string slice
 contract BytesStringDemo {
 
     function demo() public {

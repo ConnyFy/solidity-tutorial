@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 /*
 Let's talk about memory parameters, return types and execution context.
@@ -13,14 +13,14 @@ We had to make this differentiation because they behave differently, but we will
 */
 
 /*
-As mentioned, Memory is meant for short-term data storage, it is refreshed between transactions.
+As mentioned, memory is meant for short-term data storage, it is refreshed between transactions.
 Memory is not only refreshed between transactions, but also cleared at changes of execution context.
 
-An execution context is simply a boundary between external calls. When we create a new execution context - by an external method call - the Memory is reset.
-When you make the first call (i.e. a beginning of a transaction) to a method of ContractA, it is the first execution context, introducing a fresh and clean Memory instance.
-Let's say, inside that method, ContractA calls a function of ContractB. That is a new context, the Memory is cleared.
-When this function of ContractB returns back, we restore the previous execution context and the data that was present in Memory before the context change.
-Now, ContractA calls a function of itself (internal call), the EVM stays in the same context, Memory is not cleared.
+An execution context is simply a boundary between external calls. When we create a new execution context - by an external method call - the memory is reset.
+When you make the first call (i.e. a beginning of a transaction) to a method of ContractA, it is the first execution context, introducing a fresh and clean memory instance.
+Let's say, inside that method, ContractA calls a function of ContractB. That is a new context, the memory is cleared.
+When this function of ContractB returns back, we restore the previous execution context and the data that was present in memory before the context change.
+Now, ContractA calls a function of itself (internal call), the EVM stays in the same context, memory is not cleared.
 */
 
 /*
@@ -29,7 +29,7 @@ Then, memory return variables are initialized with a default value - for fixed s
 */
 
 /*
-Let's start exploring Memory in case of internal calls.
+Let's start exploring memory in case of internal calls.
 */
 contract ContractA {
 
@@ -102,7 +102,7 @@ contract ContractA {
 
         Step 2:
         The next line is `uint[3] memory variable = [uint(4),5,6];`.
-        We already now what that is. It allocates a new 3-slot long space in the Memory, and sets `variable` to point there.
+        We already now what that is. It allocates a new 3-slot long space in the memory, and sets `variable` to point there.
         0x80 -> 1   <- param points here
         0xA0 -> 2
         0xC0 -> 3
@@ -278,7 +278,7 @@ contract ContractA {
     // }
     // /*
     //     If we call method3_B() directly, we just create a two-element array with 3 and 4.
-    //     The Memory will be:
+    //     The memory will be:
     //     0x00 -> Scratch space
     //     0x20 -> Scratch space
     //     0x40 -> FMP
@@ -311,9 +311,9 @@ contract ContractA {
     //     0xC0        <- FMP
 
     //     Then we make an INTERNAL call to beta(). Since it is an internal call, there is no context change!
-    //     Remember back, Memory is cleared when a new execution context is created.
+    //     Remember back, memory is cleared when a new execution context is created.
     //     In this case, there was no new execution context created.
-    //     Even though we call another function, everything is kept in Memory.
+    //     Even though we call another function, everything is kept in memory.
     //     The allocation of [3,4] happens as it was in the same function:
     //     0x00 -> Scratch space
     //     0x20 -> Scratch space
@@ -328,7 +328,7 @@ contract ContractA {
     //     At the end of method3_B(), msize() is equal to 0x100.
     //     After returning from method3_B, it is still the same execution context. msize() is equal to 0x100 here too.
 
-    //     Keeping everything in Memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
-    //     Method parameters and return values are already in the Memory, so the caller/called method can simply set pointers at them.
+    //     Keeping everything in memory between internal calls is very effective as the EVM do not need to copy and transfer data all around.
+    //     Method parameters and return values are already in the memory, so the caller/called method can simply set pointers at them.
     // */
 }

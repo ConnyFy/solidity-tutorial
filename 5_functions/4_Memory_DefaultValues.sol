@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
@@ -7,14 +7,14 @@ import "hardhat/console.sol";
 In Solidity, null and undefined do not exist. It is not possible to declare or pass around these values.
 When you declare a new variable inside a function (either regular variable or return variable), it is assigned to a default value.
 Value types - that live in the Stack - by default assigned to their zero-ish value.
-But what about reference type variables in Memory? We know that they are just references for an address in Memory, how can they have a default value?
+But what about reference type variables in memory? We know that they are just references for an address in memory, how can they have a default value?
 
 In other languages - where you have a more direct access to pointers -, pointers are assigned to 0x00 by default.
 In Soldiity, 0x00 is part of the reserved space, more specially, part of the Scratch space.
 It cannot act as a default value for uint[3] memory, uint[] memory, string memory etc. at the same time.
 
-To prevent invalid or dangling references, the EVM sets every Memory variable to point to an address that can authentically act as their default value.
-For fixed sized memory variables (fixed size arrays, structs), the EVM allocates a new space in the Memory, the size of which is exactly the same as the the variable would use.
+To prevent invalid or dangling references, the EVM sets every memory variable to point to an address that can authentically act as their default value.
+For fixed sized memory variables (fixed size arrays, structs), the EVM allocates a new space in the memory, the size of which is exactly the same as the the variable would use.
 For variable sized memory variables (dynamic arrays, string, bytes), the EVM utilizes the Zero slot.
 */
 

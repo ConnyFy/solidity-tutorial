@@ -113,6 +113,7 @@
             - Conventions
         - Practical things
             - Code optimization
+    - Oracles
     - Advanced features
         - Storage and Memory
             - Understanding Storage and Memory

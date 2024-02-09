@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 
 /*
-In the chaptar about Memory, we talked about execution context. It is a boundary between external calls.
+In the chapter about memory, we talked about execution context. It is a boundary between external calls.
 At the creation of a new execution context, the parameters with which the function was called are passed in calldata.
 On return, the return values are passed in something called returndata - which is the counter part of calldata.
 */

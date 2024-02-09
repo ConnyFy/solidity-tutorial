@@ -49,7 +49,7 @@ contract StorageLayout {
     }
     function getArrayElem(uint slot, uint index) public view returns (uint)
     {
-        uint slot = uint(keccak256(abi.encodePacked(slot))) + index;
+        uint slot = uint(keccak256(abi.encodePacked(slot))) + index; // TODO: Rename
         return getStorageAt(slot);
     }
     function getMappingElem(uint slot, uint key) public view returns (uint) {

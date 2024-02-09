@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
 /*
 - Calldata is a special data location where function parameters live.
-- It is very similar to Memory, many people confuse them.
+- It is very similar to memory, many people confuse them.
 
-- Unlike Memory, it is a read-only area. it means you cannot declare or assign to calldata variables.
+- Unlike memory, it is a read-only area. it means you cannot declare or assign to calldata variables.
 
-- Accessing calldata variables is even cheaper than Memory variables.
+- Accessing calldata variables is even cheaper than memory variables.
 
 - Calldata can also be represented by a big array or more precisely by an immutable bytes variable.
-- Just like in case of Memory, data is not tight-packed (apart from bytes and string), everything occupies a full 32-byte space.
+- Just like in case of memory, data is not tight-packed (apart from bytes and string), everything occupies a full 32-byte space.
 - However, there is a slight change in the boundaries of slots. The first 4 bytes are special in calldata, function parameters come after that.
 - Pointers also work differently. The value of a calldata pointer depends on if it is on the stack (we declared) or in calldata (a calldata slot that points to another slot).
 
@@ -31,7 +31,7 @@ contract CalldataIntroduction {
         bytes calldata secret,
         string calldata keyword,
         Person calldata person
-        // mapping(address => uint256) memory owe // Just in case of Memory, you cannot have mappings
+        // mapping(address => uint256) memory owe // Just in case of memory, you cannot have mappings
     ) public {
         console.log("answers:", answers[0], answers[1]);
         console.log("numbers last element:", numbers[numbers.length-1]);
@@ -41,7 +41,7 @@ contract CalldataIntroduction {
 
     /*
     Pointers/References
-    - Technically, Calldata pointers work the same way as Memory pointers, but since Calldata is immutable, you cannot really do much with pointers.
+    - Technically, calldata pointers work the same way as memory pointers, but since calldata is immutable, you cannot really do much with pointers.
     - Parameters also work as pointers.
     */
     
@@ -71,7 +71,7 @@ contract CalldataIntroduction {
     Return value:
     - Return variables of reference types are usually have memory data location.
     - You can define calldata return variables too, but in that case, you are limited to return something that is already part of the calldata.
-    - You need to assign a value to return variables, cannot left them uninitialized. Unlike Memory return variables, no default value is provided for Calldata return variables.
+    - You need to assign a value to return variables, cannot left them uninitialized. Unlike memory return variables, no default value is provided for calldata return variables.
     */
 
     // function c_returnDemo(uint[] calldata calldataNumbers) public view returns (uint[] calldata slice) {
@@ -84,7 +84,7 @@ contract CalldataIntroduction {
         memoryNumbers[1] = 2;
         memoryNumbers[2] = 3;
 
-        // slice = memoryNumbers[0:2]; // Two problems: 1) Slice is only supported for dynamic calldata arrays, 2) It wants to assign data located in Memory to a Calldata variable.
+        // slice = memoryNumbers[0:2]; // Two problems: 1) Slice is only supported for dynamic calldata arrays, 2) It wants to assign data located in memory to a calldata variable.
         slice = calldataNumbers[0:2];
     }
 }

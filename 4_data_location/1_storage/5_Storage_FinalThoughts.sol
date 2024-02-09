@@ -16,4 +16,6 @@
 - If we allowed smart contracts do dynamically create, delete or change type of storage variables, inconsistencies could happen.
 - One node might already updated its "view" on a smart contract while another might not.
 - In this case nodes might not have a consensus about incoming transactions.
+
+TODO: How Ethereum avoids collision
 */

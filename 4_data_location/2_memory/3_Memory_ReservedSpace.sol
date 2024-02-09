@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.20;
+pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
 /*
-Solidity reserves the first four 32-byte slots in Memory.
+Solidity reserves the first four 32-byte slots in memory.
 - 0x00 - 0x3f: Scratch space. It refers to an area in memory that is used temporarily for intermediate computations. It is a working area for more complex calculations e.g. hashing.
 - 0x40 - 0x5f: Free memory pointer (FMP). It is used for memory allocations. Free memory pointer points to the first unused* slot in the memory.
 - 0x60 - 0x7f: Zero slot. According to the docs, it contains zeroes, should not be overwritten and is used as the initial value for empty dynamic memory arrays.
@@ -109,7 +109,7 @@ contract MemoryReservedSpace {
         0x1A0
         */
 
-        // If we want to store a new value in Memory, make sure to update FMP correctly.
+        // If we want to store a new value in memory, make sure to update FMP correctly.
         assembly {
             mstore(0x180, 9)
             mstore(0x40, 0x1A0)
@@ -196,7 +196,7 @@ contract MemoryReservedSpace {
     function c_msize() public view returns (uint currentMsize, uint fmp) {
         // An other interesting thing.
         // There is an inline assembly instruction, called msize
-        // Contrary to what its name suggests, it is not how many slots are allocated in Memory
+        // Contrary to what its name suggests, it is not how many slots are allocated in memory
         // but the address of the highest byte we have ever reached (plus one).
         // During normal allocation, they are the same. All slots are filled sequentially, so the highest
         // address we have reached by allocation (+1) is equal to the number of occupied bytes.
@@ -233,7 +233,7 @@ contract MemoryReservedSpace {
             fmp := mload(0x40)
         }
 
-        // Why did I show this to you? I mentioned earlier, accessing Memory is cheaper than Storage.
+        // Why did I show this to you? I mentioned earlier, accessing memory is cheaper than storage.
         // However, the cost of memory operations is not only depends on how many bytes you want to store,
         // but also on how many bytes you have already used.
         // The cost is linear up to the first 724 bytes (22.625 words), after that a quadratic component is added.

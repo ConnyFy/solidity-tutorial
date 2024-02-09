@@ -22,7 +22,6 @@ contract MutabilityDemo {
         is replaced by the respective value.
         Compared to regular state variables, the gas costs of constant and immutable variables
         are much lower.
-
     */
 
     // Variables

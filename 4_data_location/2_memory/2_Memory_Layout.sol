@@ -3,11 +3,11 @@ pragma solidity >=0.8.0;
 
 import "hardhat/console.sol";
 
-// As mentioned, contrary to Storage, variables in Memory are not tight packed.
+// As mentioned, contrary to storage, variables in memory are not tight packed.
 // Elements of arrays will take up a full 32-byte slot even if the base would require less space.
 // The only exeptions are bytes and string types that are still tight packed.
 
-// The first 4 x 32-bytes are reserved in Memory. We are going to talk about this region in the next lesson.
+// The first 4 x 32-bytes are reserved in memory. We are going to talk about this region in the next lesson.
 // So, the first real memory slot starts at 0x80 (0x00, 0x20, 0x40, 0x60), the next one at 0xA0, then 0xC0, then 0XE0, then 0x100.
 
 // If you are not familiar with hexadecimal numbers yet, it is a number system with a base of 16, unlike the decimal system which is base 10.
@@ -48,8 +48,8 @@ contract MemoryLayout {
             0x140 -> 6
         */
 
-        // Structs in Memory work a bit different, somewhat like Storage structs.
-        // Memory structs first create an outline of the structure just like Storage structs.
+        // Structs in memory work a bit different, somewhat like storage structs.
+        // Memory structs first create an outline of the structure just like storage structs.
         Person memory person = Person({
             age: 20,
             heightAndWeight: [uint256(180), 70],
@@ -58,10 +58,10 @@ contract MemoryLayout {
         // In this case, person will reserve 0x160, 0x180 and 0x1A0. The first slot will contain age (uint),
         // the second and third slots will each contain a memory pointer.
 
-        // Remember back how Storage structs were stored? In this particular case,
+        // Remember back how storage structs were stored? In this particular case,
         // slot 0 would contain age (20)
         // slot 1 and 2 would represent heightAndWeight, storing 180 and 70 respectively.
-        // slot 4 would contain 3, which is the length of favoriteNumbers. The real data of favoriteNumbers would be placed at hash(4) in Storage.
+        // slot 4 would contain 3, which is the length of favoriteNumbers. The real data of favoriteNumbers would be placed at hash(4) in storage.
         // Storage structs do not need to store pointers to reference-type values. Fixed size data is inlined,
         // dynamic size data is stored at a deterministic place, derived from the slot number.
 
@@ -129,8 +129,8 @@ contract MemoryLayout {
         */
 
         // Now, let's overwrite person
-        // In Memory, nothing is deleted. New objects are appended to the already existing ones.
-        // The last reserved slot in Memory is 0x2A0, so this allocation will take place right after that.
+        // In memory, nothing is deleted. New objects are appended to the already existing ones.
+        // The last reserved slot in memory is 0x2A0, so this allocation will take place right after that.
         person = Person({
             age: 30,
             heightAndWeight: [uint(170), 80],
@@ -174,7 +174,7 @@ contract MemoryLayout {
     }
 
     // Let's touch some advanced topics too:
-    // If you use Memory the "easy way", i.e. at high-level Solidity, you usually do not need to worry about most of the stuffs.
+    // If you use memory the "easy way", i.e. at high-level Solidity, you usually do not need to worry about most of the stuffs.
     // However, for more complex contracts and algorithms you might need to write some inline assembly where the usual safeguards are not present.
 
     // You might wonder after this lecture, what happens if you read between bytes. Nothing protects to read an arbitrary address in memory.
@@ -194,15 +194,15 @@ contract MemoryLayout {
     // The original value is shifted to the left by one byte, that is equal to a multiplication of 256 (0x100).
     // Instead of 1, the result of the read will be 256.
     
-    // Why is Memory not tight packed, contrary to Storage?
+    // Why is memory not tight packed, contrary to storage?
     // The EVM operates on 32-byte words. Types that occupy less space need to be extracted from the 32-byte slot with arithmetic operations that increases the total cost.
     // I mentioned briefly in some previous lessons, that execution of a smart contract i.e. calling a transaction costs money. This money is what called gas.
     // Some operations are cheaper to execute, some are very expensive.
-    // Accessing Storage is a very expensive, while accessing Memory is quite cheap.
-    // Usually in smart contracts, developers try to minimize accessing Storage, and using Memory for quick and frequent operations.
-    // While tight packing in Memory could potentially save some space, the gas cost for computing offsets and accessing a slice of data might increase.
+    // Accessing storage is a very expensive, while accessing memory is quite cheap.
+    // Usually in smart contracts, developers try to minimize accessing storage, and using memory for quick and frequent operations.
+    // While tight packing in memory could potentially save some space, the gas cost for computing offsets and accessing a slice of data might increase.
     // In contrast, using full 32-byte slots simplifies the computation, often resulting in lower gas costs.
-    // For Storage, it is the opposite. Tight packing allows multiple smaller variables to be stored in a single slot, reducing the number of storage operations required to read or write these variables.
+    // For storage, it is the opposite. Tight packing allows multiple smaller variables to be stored in a single slot, reducing the number of storage operations required to read or write these variables.
     // The two areas have different goals:
     // For memory, the priority is computational efficiency and flexibility, accommodating a wide range of data types and structures during execution.
     // For storage, the main goal is minimizing storage costs on the blockchain.
@@ -215,6 +215,6 @@ contract MemoryLayout {
     // One more interesting, why is the memory byte-addressable, why is it not numbered like storage slots, if everything occupies a 32-byte space?
     // There are two reasons, one is to make the language extendable. In this way, the language can introduce features that praises byte addressing.
     // The other - and more important - reason is that there is an MSTORE8 opcode. SLOAD, SSTORE, MLOAD and MSTORE operate on 32-byte slots.
-    // With MSTORE8 the program can overwrite a single byte in memory. It is not particularly useful for the regular Memory usage,
+    // With MSTORE8 the program can overwrite a single byte in memory. It is not particularly useful for the regular memory usage,
     // but it is an essential for built-in hashing algorithms and custom encoding/decoding.
 }
