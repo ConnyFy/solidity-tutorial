@@ -1,5 +1,5 @@
-.vscode/
 node_modules/
+soljson*.js
 
 Todo.md
 __*.sol
